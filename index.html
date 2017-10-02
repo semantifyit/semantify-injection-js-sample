@@ -13,18 +13,66 @@ Demo website for the semantify.it service. Shows how semantic annotations can be
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
     <!-- Material Design for Bootstrap CSS -->
     <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.0.0-beta.3/dist/css/bootstrap-material-design.min.css" integrity="sha384-k5bjxeyx3S5yJJNRD1eKUMdgxuvfisWKku5dwHQq9Q/Lz6H8CyL89KF52ICpX4cL" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="container">
-    <h1>Hello, world!</h1>
+<div class="container" style="padding:100px 50px;">
+    <div class="jumbotron">
+        <h1 class="display-3 text-center">Semantify.it Demo</h1>
+        <p class="lead">This is a demo website for the <a href="https://semantify.it/validator/" target="_blank">semantify.it</a> service. It shows how semantic annotations can be loaded at runtime and be crawled by engines like google's Data Testing Tool or <a href="https://semantify.it/validator/" target="_blank">semantify.it's semantic validator</a>.</p>
+        <hr class="my-4">
+        <p><a href="https://github.com/OmarJAH/Semantify.it-Demo" target="_blank">Sourcecode</a></p>
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title text-center">Inject Annotation with basic Javascript</h4>
+                <pre class="card-text" >
+function appendAnnotation() {
+    var element = document.createElement('script');
+    element.type = 'application/ld+json';
+    element.text = this.responseText;
+    document.querySelector('head').appendChild(element);
+}
+var request = new XMLHttpRequest();
+request.onload = appendAnnotation;
+//here comes the short URL of your annotation
+request.open("get", "https://smtfy.it/r1esOtnkhZ", true);
+request.send();</pre>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title text-center">Inject Annotation with JQuery</h4>
+                <pre class="card-text" >
+//here comes the short URL of your annotation
+$.getJSON('https://smtfy.it/r1esOtnkhZ', function (annotation) {
+    var element = document.createElement('script');
+    element.type = 'application/ld+json';
+    element.text = JSON.stringify(annotation);
+    document.querySelector('head').appendChild(element);
+});</pre>
+            </div>
+        </div>
+    </div>
 </div>
-
-
-
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/popper.js@1.12.5/dist/umd/popper.js" integrity="sha384-KlVcf2tswD0JOTQnzU4uwqXcbAy57PvV48YUiLjqpk/MJ2wExQhg9tuozn5A1iVw" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/bootstrap-material-design@4.0.0-beta.3/dist/js/bootstrap-material-design.js" integrity="sha384-hC7RwS0Uz+TOt6rNG8GX0xYCJ2EydZt1HeElNwQqW+3udRol4XwyBfISrNDgQcGA" crossorigin="anonymous"></script>
 <script>$(document).ready(function() { $('body').bootstrapMaterialDesign(); });</script>
+<!-- This code injects the semantic annotation from semantify.it-->
+<script>
+    function appendAnnotation() {
+        var element = document.createElement('script');
+        element.type = 'application/ld+json';
+        element.text = this.responseText;
+        document.querySelector('head').appendChild(element);
+    }
+    var request = new XMLHttpRequest();
+    request.onload = appendAnnotation;
+    //here comes the short URL of your annotation
+    request.open("get", "https://smtfy.it/r1esOtnkhZ", true);
+    request.send();
+</script>
 </body>
 </html>
